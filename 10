@@ -1,0 +1,63 @@
+from pylab import *
+
+x=[]
+y=[]
+z=[]
+t=[]
+a=10.
+b=8./3.
+r=25
+dt=0.0001
+i=1
+x1=[]
+y1=[]
+z1=[]
+
+def initialize(_x,_y,_z,_a,_b,_r,_dt,_t):
+    global a,b,r,dt,x,y,z,t
+    x=[]
+    y=[]
+    z=[]
+    t=[]
+    a=10.
+    b=8./3.
+    r=25
+    dt=0.0001
+    x.append(1)
+    y.append(0)
+    z.append(0)
+    t.append(0)
+
+def calculate(x,y,z,t,i):
+    while (t[i-1]<100):
+        x.append(x[i-1]+dt*(a*(y[i-1]-x[i-1])))
+        y.append((-x[i-1]*z[i-1]+r*x[i-1]-y[i-1])*dt+y[i-1])
+        z.append(z[i-1]+dt*(x[i-1]*y[i-1]-b*z[i-1]))
+        t.append(t[i-1]+dt)
+        i=i+1
+        while (t[-1]>30):
+            if (abs(x[-1])<0.001):
+                y1.append(y[-1])
+                z1.append(z[-1])
+            
+        
+initialize(x,y,z,a,b,r,dt,t)
+calculate(x,y,z,t,i)
+
+print y1,z1
+plot(y1,z1,label='Phase space plot:z versus y when x=0')
+xlabel('y')
+ylabel('z')
+show()
+
+
+"""
+plot(t,z,label='lorent model: z versus time')
+legend(loc='upper center')
+
+xlabel('t')
+ylabel('z')
+
+show()
+"""
+
